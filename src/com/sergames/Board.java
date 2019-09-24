@@ -11,10 +11,11 @@ public class Board {
     'E' --> End
      */
     char[][] board = {
-                      {'#','S','#','#','#'},
-                      {'#',' ',' ',' ','#'},
-                      {'#','#','#','E','#'}
-                     };
+            {'#','#','#','#','#','#','#'},
+            {'#','S','#',' ',' ',' ','#'},
+            {'#',' ',' ',' ','#','E','#'},
+            {'#','#','#','#','#','#','#'}
+    };
 
     public char[][] getBoard() {
         return board;
@@ -54,22 +55,22 @@ public class Board {
         return end;
     }
 
-    public boolean isStart(int x, int y) {
-        return x == start.getX() && y == start.getY();
+    public boolean isStart(Coordinate move) {
+        return move.x == start.getX() && move.y == start.getY();
     }
-    public boolean isExit(int x, int y) {
-        return x == end.getX() && y == end.getY();
-    }
-
-    public boolean isExplored(int x, int y){
-        return visited[x][y];
-    }
-    public boolean isWall(int x,int y){
-        return board[x][y] == '#';
+    public boolean isExit(Coordinate move) {
+        return move.x == end.getX() && move.y == end.getY();
     }
 
-    public void setVisited(int x, int y, boolean value){
-        visited[x][y]=value;
+    public boolean isExplored(Coordinate move){
+        return visited[move.x][move.y];
+    }
+    public boolean isWall(Coordinate move){
+        return board[move.x][move.y] == '#';
+    }
+
+    public void setVisited(Coordinate move, boolean value){
+        visited[move.x][move.y]=value;
     }
 
     @Override
