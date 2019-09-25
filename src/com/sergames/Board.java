@@ -21,31 +21,31 @@ public class Board {
         return board;
     }
 
-    int width = board[0].length;
-    int height = board.length;
-    boolean[][] visited;
-    Coordinate start;
-    Coordinate end;
+    private int numberRows = board.length;
+    private int numberCols = board[0].length;
+    private boolean[][] visited;
+    private Coordinate start;
+    private Coordinate end;
 
     public Board() {
-        visited = new boolean[getWidth()][getHeight()];
-        for (int x=0;x<getWidth();x++){
-            for (int y=0; y<getHeight();y++) {
-                if (board[y][x] == 'S') {
-                    start = new Coordinate(x, y);
+        visited = new boolean[getNumberCols()][getNumberCols()];
+        for (int row=0;row<getNumberRows();row++){
+            for (int col=0; col<getNumberCols();col++) {
+                if (board[col][row] == 'S') {
+                    start = new Coordinate(row, col);
                 }
-                if (board[y][x] == 'E') {
-                    end = new Coordinate(x, y);
+                if (board[col][row] == 'E') {
+                    end = new Coordinate(row, col);
                 }
             }
         }
     }
 
-    public int getWidth(){
-        return width;
+    public int getNumberRows() {
+        return numberRows;
     }
-    public int getHeight(){
-        return height;
+    public int getNumberCols() {
+        return numberCols;
     }
 
     public Coordinate getEntry(){
@@ -56,29 +56,29 @@ public class Board {
     }
 
     public boolean isStart(Coordinate move) {
-        return move.x == start.getX() && move.y == start.getY();
+        return move.getRow() == start.getRow() && move.getCol() == start.getCol();
     }
     public boolean isExit(Coordinate move) {
-        return move.x == end.getX() && move.y == end.getY();
+        return move.getRow() == end.getRow() && move.getCol() == end.getCol();
     }
 
     public boolean isExplored(Coordinate move){
-        return visited[move.x][move.y];
+        return visited[move.getRow()][move.getCol()];
     }
     public boolean isWall(Coordinate move){
-        return board[move.x][move.y] == '#';
+        return board[move.getRow()][move.getCol()] == '#';
     }
 
     public void setVisited(Coordinate move, boolean value){
-        visited[move.x][move.y]=value;
+        visited[move.getRow()][move.getCol()]=value;
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder("Width:"+getWidth()+", Height:"+getHeight()+'\n');
-        for (int i=0;i<getHeight();i++){
-            for (int j=0;j<getWidth();j++){
-                result.append(board[i][j]);
+        StringBuilder result = new StringBuilder("numberRows:"+getNumberRows()+", numberCols:"+getNumberCols()+'\n');
+        for (int row=0;row<getNumberRows();row++){
+            for (int col=0;col<getNumberCols();col++){
+                result.append(board[row][col]);
                 result.append(' ');
             }
             result.append('\n');

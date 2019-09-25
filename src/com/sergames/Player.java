@@ -13,17 +13,35 @@ public class Player {
     public Coordinate getLocation(){
         return location;
     }
+    public void setLocation(Coordinate location) {
+        this.location = location;
+    }
+
+    public void moveUp(){
+
+    }
+
+    public void moveDown(){
+
+    }
+
+    public void moveRight(){
+
+    }
+    public void moveLeft(){
+
+    }
 
     public Coordinate getNextCoordinate(Coordinate move) {
-        return new Coordinate(location.x + move.getX(), location.y + move.getY());
+        return new Coordinate(location.getRow() + move.getRow(), location.getCol() + move.getCol());
     }
     public void setNextCoordinate(Coordinate move) {
-        location.x += move.getX();
-        location.y += move.getY();
+        setLocation(move).getRow() += move.getRow();
+        setLocation().getCol() += move.getCol();
     }
 
     @Override
     public String toString() {
-        return "X:" + getLocation().x + ", Y:" + getLocation().y +'\n';
+        return "Row:" + getLocation().getRow() + ", Col:" + getLocation().getCol() +'\n';
     }
 }

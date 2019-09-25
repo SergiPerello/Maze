@@ -18,24 +18,24 @@ public class Game {
     }
 
     void start(){
+        String move;
         while (!exit){
             print();
-            String move = askAction();
+            System.out.print(player.toString());//test stuff
+            move = askAction();
             checkNextPlayerPosition(move);
 
-            //test stuff
-            System.out.print(player.toString());
         }
     }
 
     void print(){
         char array[][] = board.getBoard();
-        for (int y=0;y<board.getHeight();y++){
-            for (int x=0;x<board.getWidth();x++){
-                if (player.getLocation().y == y && player.getLocation().x == x){
+        for (int row=0;row<board.getNumberRows();row++){
+            for (int col=0;col<board.getNumberCols();col++){
+                if (player.getLocation().getRow() == row && player.getLocation().row == col){
                     System.out.print('P'+" ");
                 }
-                else System.out.print(array[y][x] + " ");
+                else System.out.print(array[row][col] + " ");
             }
             System.out.println();
         }
@@ -48,11 +48,10 @@ public class Game {
     }
 
     void checkNextPlayerPosition(String move){
-        Coordinate next;
+        Coordinate next = null;
         switch (move){
             case "up":
                 next = player.getNextCoordinate(up);
-                if (board.isWall(next)) player.setNextCoordinate(next);
                 break;
             case "down":
                 next = player.getNextCoordinate(down);
@@ -66,6 +65,9 @@ public class Game {
             default:
                 System.out.println("Not valid action");
                 break;
+        }
+        if (next != null){
+            if (board.isWall(next)) player.setNextCoordinate(next);
         }
     }
 }
