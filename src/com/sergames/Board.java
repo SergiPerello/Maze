@@ -34,7 +34,7 @@ public class Board {
                 if (board[col][row] == 'S') {
                     start = new Coordinate(row, col);
                 }
-                if (board[col][row] == 'E') {
+                else if (board[col][row] == 'E') {
                     end = new Coordinate(row, col);
                 }
             }
@@ -56,10 +56,10 @@ public class Board {
     }
 
     public boolean isStart(Coordinate move) {
-        return move.getRow() == start.getRow() && move.getCol() == start.getCol();
+        return start.equals(move);
     }
     public boolean isExit(Coordinate move) {
-        return move.getRow() == end.getRow() && move.getCol() == end.getCol();
+        return end.equals(move);
     }
 
     public boolean isExplored(Coordinate move){

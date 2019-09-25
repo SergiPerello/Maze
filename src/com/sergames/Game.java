@@ -3,10 +3,7 @@ package com.sergames;
 import java.util.Scanner;
 
 public class Game {
-    private static final Coordinate up = new Coordinate(0,-1);
-    private static final Coordinate down = new Coordinate(0,1);
-    private static final Coordinate right = new Coordinate(1,0);
-    private static final Coordinate left = new Coordinate(-1,0);
+
 
     Board board = new Board();
     Player player;
