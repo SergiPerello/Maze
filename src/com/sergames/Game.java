@@ -48,16 +48,16 @@ public class Game {
         Coordinate next = null;
         switch (move){
             case "up":
-                next = player.getNextCoordinate(up);
+                player.moveUp();
                 break;
             case "down":
-                next = player.getNextCoordinate(down);
+                player.moveDown();
                 break;
             case "right":
-                next = player.getNextCoordinate(right);
+                player.moveRight();
                 break;
             case "left":
-                next = player.getNextCoordinate(left);
+                player.moveLeft();
                 break;
             default:
                 System.out.println("Not valid action");
