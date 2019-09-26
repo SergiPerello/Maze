@@ -3,14 +3,18 @@ package com.sergames;
 import java.util.Scanner;
 
 public class Game {
-
-
     Board board = new Board();
     Player player;
     boolean exit = false;
 
+    //UI Texts
+    public static final String up="up", down="down", right="right", left="left";
+    public static final String nextMove = "Next Action: (Up, Down, Right, Left)";
+    public static final String notMoveText = "You can't move";
+    public static final String notValidInput = "Not valid input";
+
     public Game() {
-        player = new Player(board.getEntry());
+        player = new Player(board.getEntry(),5);
         start();
     }
 
@@ -18,10 +22,8 @@ public class Game {
         String move;
         while (!exit){
             print();
-            System.out.print(player.toString());//test stuff
             move = askAction();
             checkNextPlayerPosition(move);
-
         }
     }
 
@@ -40,26 +42,34 @@ public class Game {
 
     String askAction(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Next Action: (Up, Down, Right, Left)");
+        System.out.println(nextMove);
         return sc.nextLine().toLowerCase();
     }
 
     void checkNextPlayerPosition(String move){
         switch (move){
-            case "up":
-                if (board.isWall(player.getLocation().add(Coordinate.up))) player.moveUp();
+            case up:
+                if (board.isWall(player.getLocation().check(player.getLocation(),Coordinate.up))) {
+                    player.moveUp();
+                } else System.out.println(notMoveText);
                 break;
-            case "down":
-                if (board.isWall(player.getLocation().add(Coordinate.down))) player.moveDown();
+            case down:
+                if (!board.isWall(player.getLocation().check(player.getLocation(),Coordinate.down))) {
+                    player.moveDown();
+                } else System.out.println(notMoveText);
                 break;
-            case "right":
-                if (board.isWall(player.getLocation().add(Coordinate.right))) player.moveRight();
+            case right:
+                if (!board.isWall(player.getLocation().check(player.getLocation(),Coordinate.right))) {
+                    player.moveRight();
+                } else System.out.println(notMoveText);
                 break;
-            case "left":
-                if (board.isWall(player.getLocation().add(Coordinate.left))) player.moveLeft();
+            case left:
+                if (!board.isWall(player.getLocation().check(player.getLocation(),Coordinate.left))) {
+                    player.moveLeft();
+                } else System.out.println(notMoveText);
                 break;
             default:
-                System.out.println("Not valid action");
+                System.out.println(notValidInput);
                 break;
         }
     }

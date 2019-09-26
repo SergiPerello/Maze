@@ -61,14 +61,13 @@ public class Board {
     public boolean isExit(Coordinate move) {
         return end.equals(move);
     }
-
-    public boolean isExplored(Coordinate move){
-        return visited[move.getRow()][move.getCol()];
-    }
     public boolean isWall(Coordinate move){
         return board[move.getRow()][move.getCol()] == '#';
     }
 
+    public boolean isExplored(Coordinate move){
+        return visited[move.getRow()][move.getCol()];
+    }
     public void setVisited(Coordinate move, boolean value){
         visited[move.getRow()][move.getCol()]=value;
     }

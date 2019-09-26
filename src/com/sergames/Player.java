@@ -4,14 +4,20 @@ import java.util.Random;
 
 public class Player {
 
+    private int health;
     private Coordinate location;
 
-    public Player(Coordinate start) {
+    public Player(Coordinate start,int Health) {
         location = start;
+        health = Health;
     }
 
     public Coordinate getLocation(){
         return location;
+    }
+
+    public Coordinate checkMove(Coordinate move){
+        return location.check(location,move);
     }
 
     public void moveUp(){

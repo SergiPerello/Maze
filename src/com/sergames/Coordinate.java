@@ -22,6 +22,12 @@ public class Coordinate {
         return col;
     }
 
+    public Coordinate check(Coordinate location, Coordinate move){
+        int a = location.row + move.row;
+        int b = location.col + move.col;
+        return new Coordinate(a,b);
+    }
+
     public Coordinate add(Coordinate other){
         this.row += other.row;
         this.col += other.col;
