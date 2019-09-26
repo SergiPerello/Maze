@@ -3,6 +3,11 @@ package com.sergames;
 import java.util.Objects;
 
 public class Coordinate {
+    public static Coordinate up = new Coordinate(-1,0);
+    public static Coordinate down = new Coordinate(1,0);
+    public static Coordinate right = new Coordinate(0,1);
+    public static Coordinate left = new Coordinate(0,-1);
+
     private int row,col;
 
     public Coordinate(int row, int col) {

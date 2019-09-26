@@ -31,10 +31,10 @@ public class Board {
         visited = new boolean[getNumberCols()][getNumberCols()];
         for (int row=0;row<getNumberRows();row++){
             for (int col=0; col<getNumberCols();col++) {
-                if (board[col][row] == 'S') {
+                if (board[row][col] == 'S') {
                     start = new Coordinate(row, col);
                 }
-                else if (board[col][row] == 'E') {
+                else if (board[row][col] == 'E') {
                     end = new Coordinate(row, col);
                 }
             }

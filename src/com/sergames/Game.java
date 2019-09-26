@@ -29,7 +29,7 @@ public class Game {
         char array[][] = board.getBoard();
         for (int row=0;row<board.getNumberRows();row++){
             for (int col=0;col<board.getNumberCols();col++){
-                if (player.getLocation().getRow() == row && player.getLocation().row == col){
+                if (player.getLocation().getRow() == row && player.getLocation().getCol() == col){
                     System.out.print('P'+" ");
                 }
                 else System.out.print(array[row][col] + " ");
@@ -45,26 +45,22 @@ public class Game {
     }
 
     void checkNextPlayerPosition(String move){
-        Coordinate next = null;
         switch (move){
             case "up":
-                player.moveUp();
+                if (board.isWall(player.getLocation().add(Coordinate.up))) player.moveUp();
                 break;
             case "down":
-                player.moveDown();
+                if (board.isWall(player.getLocation().add(Coordinate.down))) player.moveDown();
                 break;
             case "right":
-                player.moveRight();
+                if (board.isWall(player.getLocation().add(Coordinate.right))) player.moveRight();
                 break;
             case "left":
-                player.moveLeft();
+                if (board.isWall(player.getLocation().add(Coordinate.left))) player.moveLeft();
                 break;
             default:
                 System.out.println("Not valid action");
                 break;
-        }
-        if (next != null){
-            if (board.isWall(next)) player.setNextCoordinate(next);
         }
     }
 }
