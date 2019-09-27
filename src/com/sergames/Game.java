@@ -49,22 +49,22 @@ public class Game {
     void checkNextPlayerPosition(String move){
         switch (move){
             case up:
-                if (board.isWall(player.getLocation().check(player.getLocation(),Coordinate.up))) {
+                if (board.isWall(player.getLocation().check(Coordinate.up))) {
                     player.moveUp();
                 } else System.out.println(notMoveText);
                 break;
             case down:
-                if (!board.isWall(player.getLocation().check(player.getLocation(),Coordinate.down))) {
+                if (!board.isWall(player.getLocation().check(Coordinate.down))) {
                     player.moveDown();
                 } else System.out.println(notMoveText);
                 break;
             case right:
-                if (!board.isWall(player.getLocation().check(player.getLocation(),Coordinate.right))) {
+                if (!board.isWall(player.getLocation().check(Coordinate.right))) {
                     player.moveRight();
                 } else System.out.println(notMoveText);
                 break;
             case left:
-                if (!board.isWall(player.getLocation().check(player.getLocation(),Coordinate.left))) {
+                if (!board.isWall(player.getLocation().check(Coordinate.left))) {
                     player.moveLeft();
                 } else System.out.println(notMoveText);
                 break;

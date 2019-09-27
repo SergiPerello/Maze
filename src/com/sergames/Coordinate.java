@@ -22,9 +22,9 @@ public class Coordinate {
         return col;
     }
 
-    public Coordinate check(Coordinate location, Coordinate move){
-        int a = location.row + move.row;
-        int b = location.col + move.col;
+    public Coordinate check(Coordinate move){
+        int a = this.row + move.row;
+        int b = this.col + move.col;
         return new Coordinate(a,b);
     }
 
