@@ -1,7 +1,5 @@
 package com.sergames;
 
-import java.util.Arrays;
-
 public class Board {
 
     /*
@@ -10,61 +8,41 @@ public class Board {
     'S' --> Start
     'E' --> End
      */
-    char[][] board = {
-            {'#','#','#','#','#','#','#'},
-            {'#','S','#',' ',' ',' ','#'},
-            {'#',' ',' ',' ','#','E','#'},
-            {'#','#','#','#','#','#','#'}
-    };
+    private char[][] board;
+
+
+
+    public Board(int rows, int cols, Coordinate start) { //Visited maze
+        board = new char[rows][cols];
+        fillArrayBoarders(board);
+        setVisited(start);
+    }
+
+    public Board(char[][] map) { //Discovered maze
+        board = map;
+    }
 
     public char[][] getBoard() {
         return board;
     }
 
-    private int numberRows = board.length;
-    private int numberCols = board[0].length;
-    private boolean[][] visited;
-    private Coordinate start;
-    private Coordinate end;
-
-    public Board() {
-        visited = new boolean[getNumberCols()][getNumberCols()];
-
-        for (int row=0;row<getNumberRows();row++){
-            for (int col=0; col<getNumberCols();col++) {
-                if (board[row][col] == 'S') {
-                    start = new Coordinate(row, col);
-                }
-                else if (board[row][col] == 'E') {
-                    end = new Coordinate(row, col);
-                }
-            }
-        }
-    }
-    void fillArrayBoarders(boolean[][]array){
+    //Visited stuff
+    void fillArrayBoarders(char[][]array){
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array.length; col++) {
                 if(row == 0 || (row == array.length-1 || col==0 || col==array.length-1)){
-                    array[row][col] = true;
-                }else{
-                    array[row][col] = false;
+                    array[row][col] = board[row][col];
                 }
             }
         }
     }
-
-    public int getNumberRows() {
-        return numberRows;
+    public char isExplored(Coordinate position){
+        return board[position.getRow()][position.getCol()];
     }
-    public int getNumberCols() {
-        return numberCols;
-    }
-
-    public Coordinate getEntry(){
-        return start;
-    }
-    public Coordinate getExit(){
-        return end;
+    public void setVisited(Coordinate position){
+        int row = position.getRow();
+        int col = position.getCol();
+        board[row][col]=board[row][col];
     }
 
     public boolean isStart(Coordinate move) {
@@ -77,23 +55,5 @@ public class Board {
         return board[move.getRow()][move.getCol()] == '#';
     }
 
-    public boolean isExplored(Coordinate move){
-        return visited[move.getRow()][move.getCol()];
-    }
-    public void setVisited(Coordinate move, boolean value){
-        visited[move.getRow()][move.getCol()]=value;
-    }
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder("numberRows:"+getNumberRows()+", numberCols:"+getNumberCols()+'\n');
-        for (int row=0;row<getNumberRows();row++){
-            for (int col=0;col<getNumberCols();col++){
-                result.append(board[row][col]);
-                result.append(' ');
-            }
-            result.append('\n');
-        }
-        return result.toString();
-    }
 }
