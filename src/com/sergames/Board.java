@@ -9,8 +9,8 @@ public class Board {
     'E' --> End
      */
     private char[][] board;
-
-
+    private int numberRows;
+    private int numberCols;
 
     public Board(int rows, int cols, Coordinate start) { //Visited maze
         board = new char[rows][cols];
@@ -20,10 +20,19 @@ public class Board {
 
     public Board(char[][] map) { //Discovered maze
         board = map;
+        numberCols = map[0].length;
+        numberRows = map.length;
     }
 
     public char[][] getBoard() {
         return board;
+    }
+
+    public int getNumberRows() {
+        return numberRows;
+    }
+    public int getNumberCols() {
+        return numberCols;
     }
 
     //Visited stuff
@@ -45,12 +54,7 @@ public class Board {
         board[row][col]=board[row][col];
     }
 
-    public boolean isStart(Coordinate move) {
-        return start.equals(move);
-    }
-    public boolean isExit(Coordinate move) {
-        return end.equals(move);
-    }
+
     public boolean isWall(Coordinate move){
         return board[move.getRow()][move.getCol()] == '#';
     }

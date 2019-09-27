@@ -11,25 +11,37 @@ public class Game {
     };
     private int numberRows = hardCodedMap.length;
     private int numberCols = hardCodedMap[0].length;
+
+    private Board maze = new Board(hardCodedMap);
+    private Board visited;
+    private Player player;
     private Coordinate start;
     private Coordinate end;
-
-    Board maze = new Board(hardCodedMap);
-    Board visited = new Board(numberRows,numberCols,start);
-    Player player = new Player(start,5);;
     boolean exit = false;
+
+    public Game() {
+        start();
+        visited = new Board(numberRows,numberCols,start);
+        player = new Player(start,5);
+    }
 
     void start(){
         identifyMapLocations();
         while (!exit){
             Displayer.print(visited,player);
             playerNextStep(Displayer.askAction());
-            if (maze.isExit(player.getLocation())){
+            if (isExit(player.getLocation())){
                 System.out.println(Displayer.winText);
                 Displayer.print(maze,player);
                 exit = true;
             }
         }
+    }
+    public boolean isStart(Coordinate move) {
+        return start.equals(move);
+    }
+    public boolean isExit(Coordinate move) {
+        return end.equals(move);
     }
 
     void identifyMapLocations(){
