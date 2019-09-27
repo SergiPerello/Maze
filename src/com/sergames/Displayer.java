@@ -9,6 +9,7 @@ public class Displayer {
     public static final String nextMove = "Next Action: (Up, Down, Right, Left)";
     public static final String notMoveText = "You can't move";
     public static final String notValidInput = "Not valid input";
+    public static final String winText = "You won!";
 
     static String askAction(){
         Scanner sc = new Scanner(System.in);

@@ -29,6 +29,7 @@ public class Board {
 
     public Board() {
         visited = new boolean[getNumberCols()][getNumberCols()];
+
         for (int row=0;row<getNumberRows();row++){
             for (int col=0; col<getNumberCols();col++) {
                 if (board[row][col] == 'S') {
@@ -36,6 +37,17 @@ public class Board {
                 }
                 else if (board[row][col] == 'E') {
                     end = new Coordinate(row, col);
+                }
+            }
+        }
+    }
+    void fillArrayBoarders(boolean[][]array){
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array.length; col++) {
+                if(row == 0 || (row == array.length-1 || col==0 || col==array.length-1)){
+                    array[row][col] = true;
+                }else{
+                    array[row][col] = false;
                 }
             }
         }

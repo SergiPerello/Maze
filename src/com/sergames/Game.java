@@ -4,28 +4,27 @@ import java.util.Scanner;
 
 public class Game {
     Board board = new Board();
-    Player player;
+    Player player = new Player(board.getEntry(),5);;
     boolean exit = false;
-
-
-
-    public Game() {
-        player = new Player(board.getEntry(),5);
-        start();
-    }
 
     void start(){
         while (!exit){
             Displayer.print(board,player);
-            checkNextPlayerPosition(Displayer.askAction());
+            playerNextStep(Displayer.askAction());
+            if (board.isExit(player.getLocation())){
+                System.out.println(Displayer.winText);
+                Displayer.print(board,player);
+                exit = true;
+            }
         }
     }
 
-    void checkNextPlayerPosition(String move){
+    void playerNextStep(String move){
         switch (move){
             case Displayer.up:
-                if (board.isWall(player.getLocation().check(Coordinate.up))) {
+                if (!board.isWall(player.getLocation().check(Coordinate.up))) {
                     player.moveUp();
+                    System.out.println("a");
                 } else System.out.println(Displayer.notMoveText);
                 break;
             case Displayer.down:
