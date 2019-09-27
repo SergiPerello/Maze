@@ -16,10 +16,6 @@ public class Player {
         return location;
     }
 
-    public Coordinate checkMove(Coordinate move){
-        return location.check(location,move);
-    }
-
     public void moveUp(){
         location.add(Coordinate.up);
     }

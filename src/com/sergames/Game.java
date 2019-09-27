@@ -7,11 +7,7 @@ public class Game {
     Player player;
     boolean exit = false;
 
-    //UI Texts
-    public static final String up="up", down="down", right="right", left="left";
-    public static final String nextMove = "Next Action: (Up, Down, Right, Left)";
-    public static final String notMoveText = "You can't move";
-    public static final String notValidInput = "Not valid input";
+
 
     public Game() {
         player = new Player(board.getEntry(),5);
@@ -19,57 +15,36 @@ public class Game {
     }
 
     void start(){
-        String move;
         while (!exit){
-            print();
-            move = askAction();
-            checkNextPlayerPosition(move);
+            Displayer.print(board,player);
+            checkNextPlayerPosition(Displayer.askAction());
         }
-    }
-
-    void print(){
-        char array[][] = board.getBoard();
-        for (int row=0;row<board.getNumberRows();row++){
-            for (int col=0;col<board.getNumberCols();col++){
-                if (player.getLocation().getRow() == row && player.getLocation().getCol() == col){
-                    System.out.print('P'+" ");
-                }
-                else System.out.print(array[row][col] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    String askAction(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println(nextMove);
-        return sc.nextLine().toLowerCase();
     }
 
     void checkNextPlayerPosition(String move){
         switch (move){
-            case up:
+            case Displayer.up:
                 if (board.isWall(player.getLocation().check(Coordinate.up))) {
                     player.moveUp();
-                } else System.out.println(notMoveText);
+                } else System.out.println(Displayer.notMoveText);
                 break;
-            case down:
+            case Displayer.down:
                 if (!board.isWall(player.getLocation().check(Coordinate.down))) {
                     player.moveDown();
-                } else System.out.println(notMoveText);
+                } else System.out.println(Displayer.notMoveText);
                 break;
-            case right:
+            case Displayer.right:
                 if (!board.isWall(player.getLocation().check(Coordinate.right))) {
                     player.moveRight();
-                } else System.out.println(notMoveText);
+                } else System.out.println(Displayer.notMoveText);
                 break;
-            case left:
+            case Displayer.left:
                 if (!board.isWall(player.getLocation().check(Coordinate.left))) {
                     player.moveLeft();
-                } else System.out.println(notMoveText);
+                } else System.out.println(Displayer.notMoveText);
                 break;
             default:
-                System.out.println(notValidInput);
+                System.out.println(Displayer.notValidInput);
                 break;
         }
     }
