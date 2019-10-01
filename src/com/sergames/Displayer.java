@@ -17,9 +17,9 @@ public class Displayer {
         return sc.nextLine().toLowerCase();
     }
 
-    static void print(Board board,Player player){
-        for (int row=0;row<board.getNumberRows();row++){
-            for (int col=0;col<board.getNumberCols();col++){
+    static void print(Board board,Player player,Coordinate size){
+        for (int row=0;row<size.getRow();row++){
+            for (int col=0;col<size.getCol();col++){
                 if (player.getLocation().getRow() == row && player.getLocation().getCol() == col){
                     System.out.print('P'+" ");
                 }

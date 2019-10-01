@@ -9,9 +9,7 @@ public class Game {
         {'#', ' ', ' ', ' ', '#', 'E', '#'},
         {'#', '#', '#', '#', '#', '#', '#'}
     };
-    private int numberRows = hardCodedMap.length;
-    private int numberCols = hardCodedMap[0].length;
-
+    private Coordinate tableSize = new Coordinate(hardCodedMap.length,hardCodedMap[0].length);
     private Board maze = new Board(hardCodedMap);
     private Board visited;
     private Player player;
@@ -20,19 +18,19 @@ public class Game {
     boolean exit = false;
 
     public Game() {
-        start();
-        visited = new Board(numberRows,numberCols,start);
+        identifyMapLocations();
+        visited = new Board(tableSize,start,'#');
         player = new Player(start,5);
+        start();
     }
 
     void start(){
-        identifyMapLocations();
         while (!exit){
-            Displayer.print(visited,player);
+            Displayer.print(visited,player,tableSize);
             playerNextStep(Displayer.askAction());
             if (isExit(player.getLocation())){
                 System.out.println(Displayer.winText);
-                Displayer.print(maze,player);
+                Displayer.print(maze,player,tableSize);
                 exit = true;
             }
         }
@@ -45,8 +43,8 @@ public class Game {
     }
 
     void identifyMapLocations(){
-        for (int row=0;row<numberRows;row++){
-            for (int col=0; col<numberCols;col++) {
+        for (int row=0;row<tableSize.getRow();row++){
+            for (int col=0; col<tableSize.getCol();col++) {
                 if (hardCodedMap[row][col] == 'S') {
                     start = new Coordinate(row, col);
                 }

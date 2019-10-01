@@ -9,38 +9,26 @@ public class Board {
     'E' --> End
      */
     private char[][] board;
-    private int numberRows;
-    private int numberCols;
 
-    public Board(int rows, int cols, Coordinate start) { //Visited maze
-        board = new char[rows][cols];
-        fillArrayBoarders(board);
+    public Board(Coordinate size, Coordinate start,char symbol) { //Visited maze
+        board = new char[size.getRow()][size.getCol()];
+        fillArrayBoarders(size,symbol);
         setVisited(start);
     }
 
     public Board(char[][] map) { //Discovered maze
         board = map;
-        numberCols = map[0].length;
-        numberRows = map.length;
     }
 
     public char[][] getBoard() {
         return board;
     }
 
-    public int getNumberRows() {
-        return numberRows;
-    }
-    public int getNumberCols() {
-        return numberCols;
-    }
-
-    //Visited stuff
-    void fillArrayBoarders(char[][]array){
-        for (int row = 0; row < array.length; row++) {
-            for (int col = 0; col < array.length; col++) {
-                if(row == 0 || (row == array.length-1 || col==0 || col==array.length-1)){
-                    array[row][col] = board[row][col];
+    void fillArrayBoarders(Coordinate size,char symbol){
+        for (int row = 0; row < size.getRow(); row++) {
+            for (int col = 0; col < size.getCol(); col++) {
+                if(row == 0 || (row == size.getRow()-1 || col==0 || col==size.getCol()-1)){
+                    board[row][col] = symbol;
                 }
             }
         }
