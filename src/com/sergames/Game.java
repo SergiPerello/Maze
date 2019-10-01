@@ -4,10 +4,13 @@ import java.util.Scanner;
 
 public class Game {
     char[][]hardCodedMap = {
-        {'#', '#', '#', '#', '#', '#', '#'},
-        {'#', 'S', '#', ' ', ' ', ' ', '#'},
-        {'#', ' ', ' ', ' ', '#', 'E', '#'},
-        {'#', '#', '#', '#', '#', '#', '#'}
+            {'#','#','#','#','#','#','#','#','#'},
+            {'#','S','#',' ',' ',' ','#','E','#'},
+            {'#',' ','#',' ','#',' ','#',' ','#'},
+            {'#',' ','#',' ','#',' ',' ',' ','#'},
+            {'#',' ','#',' ','#',' ','#',' ','#'},
+            {'#',' ',' ',' ','#',' ','#',' ','#'},
+            {'#','#','#','#','#','#','#','#','#'}
     };
     private Coordinate tableSize = new Coordinate(hardCodedMap.length,hardCodedMap[0].length);
     private Board maze = new Board(hardCodedMap);
@@ -19,7 +22,7 @@ public class Game {
 
     public Game() {
         identifyMapLocations();
-        visited = new Board(tableSize,start,'#');
+        visited = new Board(tableSize,'#');
         player = new Player(start,5);
         start();
     }
@@ -29,9 +32,9 @@ public class Game {
             Displayer.print(visited,player,tableSize);
             playerNextStep(Displayer.askAction());
             if (isExit(player.getLocation())){
-                System.out.println(Displayer.winText);
-                Displayer.print(maze,player,tableSize);
                 exit = true;
+                Displayer.print(maze,player,tableSize);
+                System.out.println(Displayer.winText);
             }
         }
     }
@@ -56,29 +59,39 @@ public class Game {
     }
 
     void playerNextStep(String move){
+        Coordinate nextMove;
         switch (move){
             case Displayer.up:
-                Coordinate nextMove = player.getLocation().check(Coordinate.up);
+                nextMove = player.getLocation().check(Coordinate.up);
                 if (!maze.isWall(nextMove)) player.moveUp();
                 else {
+                    visited.setVisited(nextMove,maze.getVisited(nextMove));
                     System.out.println(Displayer.notMoveText);
-                    visited.setVisited(nextMove);
                 }
                 break;
             case Displayer.down:
-                if (!maze.isWall(player.getLocation().check(Coordinate.down))) {
-                    player.moveDown();
-                } else System.out.println(Displayer.notMoveText);
+                nextMove = player.getLocation().check(Coordinate.down);
+                if (!maze.isWall(nextMove)) player.moveDown();
+                else {
+                    visited.setVisited(nextMove,maze.getVisited(nextMove));
+                    System.out.println(Displayer.notMoveText);
+                }
                 break;
             case Displayer.right:
-                if (!maze.isWall(player.getLocation().check(Coordinate.right))) {
-                    player.moveRight();
-                } else System.out.println(Displayer.notMoveText);
+                nextMove = player.getLocation().check(Coordinate.right);
+                if (!maze.isWall(nextMove)) player.moveRight();
+                else {
+                    visited.setVisited(nextMove,maze.getVisited(nextMove));
+                    System.out.println(Displayer.notMoveText);
+                }
                 break;
             case Displayer.left:
-                if (!maze.isWall(player.getLocation().check(Coordinate.left))) {
-                    player.moveLeft();
-                } else System.out.println(Displayer.notMoveText);
+                nextMove = player.getLocation().check(Coordinate.left);
+                if (!maze.isWall(nextMove)) player.moveLeft();
+                else {
+                    visited.setVisited(nextMove,maze.getVisited(nextMove));
+                    System.out.println(Displayer.notMoveText);
+                }
                 break;
             default:
                 System.out.println(Displayer.notValidInput);

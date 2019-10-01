@@ -8,25 +8,25 @@ public class Player {
     private Coordinate location;
 
     public Player(Coordinate start,int Health) {
-        location = start;
-        health = Health;
+        this.location = start;
+        this.health = Health;
     }
 
     public Coordinate getLocation(){
-        return location;
+        return this.location;
     }
 
     public void moveUp(){
-        location.add(Coordinate.up);
+        getLocation().add(Coordinate.up);
     }
     public void moveDown(){
-        location.add(Coordinate.down);
+        getLocation().add(Coordinate.down);
     }
     public void moveRight(){
-        location.add(Coordinate.right);
+        getLocation().add(Coordinate.right);
     }
     public void moveLeft(){
-        location.add(Coordinate.left);
+        getLocation().add(Coordinate.left);
     }
 
     @Override

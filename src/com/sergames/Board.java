@@ -10,18 +10,19 @@ public class Board {
      */
     private char[][] board;
 
-    public Board(Coordinate size, Coordinate start,char symbol) { //Visited maze
+    //Visited maze
+    public Board(Coordinate size,char symbol) {
         board = new char[size.getRow()][size.getCol()];
         fillArrayBoarders(size,symbol);
-        setVisited(start);
     }
 
-    public Board(char[][] map) { //Discovered maze
+    //Discovered maze
+    public Board(char[][] map) {
         board = map;
     }
 
     public char[][] getBoard() {
-        return board;
+        return this.board;
     }
 
     void fillArrayBoarders(Coordinate size,char symbol){
@@ -33,15 +34,13 @@ public class Board {
             }
         }
     }
-    public char isExplored(Coordinate position){
-        return board[position.getRow()][position.getCol()];
-    }
-    public void setVisited(Coordinate position){
-        int row = position.getRow();
-        int col = position.getCol();
-        board[row][col]=board[row][col];
-    }
 
+    public char getVisited(Coordinate position){
+        return this.board[position.getRow()][position.getCol()];
+    }
+    public void setVisited(Coordinate position, char symbol){
+        this.board[position.getRow()][position.getCol()]=symbol;
+    }
 
     public boolean isWall(Coordinate move){
         return board[move.getRow()][move.getCol()] == '#';
