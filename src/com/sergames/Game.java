@@ -3,12 +3,20 @@ package com.sergames;
 import java.util.Scanner;
 
 public class Game {
+    /*
+    ' ' --> Road
+    '#' --> Wall
+    'S' --> Start
+    'E' --> End
+    'A' --> Axe
+    'B' --> Bomb
+     */
     char[][]hardCodedMap = {
             {'#','#','#','#','#','#','#','#','#'},
-            {'#','S','#',' ',' ',' ','#','E','#'},
-            {'#',' ','#',' ','#',' ','#',' ','#'},
-            {'#',' ','#',' ','#',' ',' ',' ','#'},
-            {'#',' ','#',' ','#',' ','#',' ','#'},
+            {'#','S','#',' ','B',' ','#','E','#'},
+            {'#',' ','#',' ','#','B','#',' ','#'},
+            {'#',' ','#','A','#',' ',' ',' ','#'},
+            {'#',' ','#',' ','#',' ','#','B','#'},
             {'#',' ',' ',' ','#',' ','#',' ','#'},
             {'#','#','#','#','#','#','#','#','#'}
     };
@@ -16,6 +24,8 @@ public class Game {
     private Board maze = new Board(hardCodedMap);
     private Board visited;
     private Player player;
+    private Item axe = new Item(Displayer.axe);
+    private Item bomb = new Item(Displayer.bomb);
     private Coordinate start;
     private Coordinate end;
     boolean exit = false;
@@ -49,10 +59,16 @@ public class Game {
         for (int row=0;row<tableSize.getRow();row++){
             for (int col=0; col<tableSize.getCol();col++) {
                 if (hardCodedMap[row][col] == 'S') {
-                    start = new Coordinate(row, col);
+                    start = new Coordinate(row,col);
                 }
                 else if (hardCodedMap[row][col] == 'E') {
-                    end = new Coordinate(row, col);
+                    end = new Coordinate(row,col);
+                }
+                else if (hardCodedMap[row][col] == 'A') {
+                    axe.setPosition(new Coordinate(row,col));
+                }
+                else if (hardCodedMap[row][col] == 'B') {
+                    bomb.setPosition(new Coordinate(row,col));
                 }
             }
         }

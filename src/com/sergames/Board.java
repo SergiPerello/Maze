@@ -2,12 +2,6 @@ package com.sergames;
 
 public class Board {
 
-    /*
-    ' ' --> Road
-    '#' --> Wall
-    'S' --> Start
-    'E' --> End
-     */
     private char[][] board;
 
     //Visited maze
