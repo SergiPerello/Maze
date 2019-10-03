@@ -17,10 +17,10 @@ public class Game {
     char[][]hardCodedMap = {
             {'■','■','■','■','■','■','■','■','■'},
             {'■','S','#',' ','@',' ','#','E','■'},
-            {'■',' ','#',' ','#','@','#',' ','■'},
-            {'■',' ','#','?','#',' ',' ',' ','■'},
-            {'■',' ','#',' ','#',' ','#','@','■'},
-            {'■',' ',' ',' ','#',' ','#',' ','■'},
+            {'■','@','#',' ','#','@','#',' ','■'},
+            {'■','@','#','?','#',' ',' ',' ','■'},
+            {'■','@','#',' ','#',' ','#','@','■'},
+            {'■','@','@',' ','#',' ','#',' ','■'},
             {'■','■','■','■','■','■','■','■','■'}
     };
     private Coordinate tableSize;
@@ -32,6 +32,7 @@ public class Game {
     private Coordinate end;
     boolean exit = false;
 
+
     public Game() {
         tableSize = new Coordinate(hardCodedMap.length,hardCodedMap[0].length);
         maze = new Board(hardCodedMap);
@@ -40,21 +41,7 @@ public class Game {
         visited = new Board(tableSize, wall);
         player = new Player(start,5);
         start();
-
     }
-
-    void start(){
-        while (!exit){
-            print(visited,player,tableSize);
-            playerNextStep(askAction(nextMove));
-            if (isExit(player.getLocation())){
-                exit = true;
-                print(maze,player,tableSize);
-                System.out.println(winText);
-            }
-        }
-    }
-
     void identifyMapLocations(){
         for (int row=0;row<tableSize.getRow();row++){
             for (int col=0; col<tableSize.getCol();col++) {
@@ -68,8 +55,12 @@ public class Game {
         }
     }
 
-    public boolean isExit(Coordinate move) {
-        return end.equals(move);
+    void start(){
+        while (!exit){
+            print(visited,player,tableSize);
+            playerNextStep(askAction(nextMove));
+            exit = checkEndGame(exit);
+        }
     }
 
     void playerNextStep(String move){
@@ -99,10 +90,8 @@ public class Game {
             if (!maze.isWall(nextMove) && !maze.isBedrock(nextMove)) {
                 visited.setVisited(player.getLocation(),Displayer.walked);
                 player.move(nextMove);
-
-                if (maze.isAxe(nextMove)) {
-                    player.addAxe();
-                }
+                if (maze.isAxe(nextMove)) player.addAxe();
+                if (maze.isBomb(nextMove)) player.harm();
             }
             else {
                 if (player.hasAxe() && maze.isWall(nextMove)){
@@ -119,4 +108,25 @@ public class Game {
             }
         }
     }
+
+    //EndGame related stuff
+    public boolean isExit(Coordinate move) {
+        return end.equals(move);
+    }
+    private boolean checkEndGame(boolean exit) {
+        if (player.isDead()){
+            exit = true;
+            print(maze,player,tableSize);
+            System.out.println(loseText);
+        }
+        else if (isExit(player.getLocation())){
+            exit = true;
+            print(maze,player,tableSize);
+            System.out.println(winText);
+        }
+        return exit;
+    }
+
+
+
 }

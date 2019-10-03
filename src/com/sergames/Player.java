@@ -12,19 +12,11 @@ public class Player {
         this.axe = false;
     }
 
-    public boolean hasAxe() {
-        return axe;
+    public void move(Coordinate move) {
+        setLocation(move);
     }
 
-    public void addAxe() {
-        this.axe = true;
-        System.out.println(Displayer.collectedAxe);
-    }
-    public void removeAxe() {
-        this.axe = false;
-        System.out.println(Displayer.brokeAxe);
-    }
-
+    //Location related stuff
     public Coordinate getLocation(){
         return location;
     }
@@ -32,22 +24,31 @@ public class Player {
         this.location = location;
     }
 
-    public void move(Coordinate move){
-        setLocation(move);
+    //Axe related stuff
+    public boolean hasAxe() {
+        return axe;
+    }
+    public void addAxe() {
+        this.axe = true;
+        System.out.println(Displayer.collectedAxe);
+    }
+    public void removeAxe() {
+        this.axe = false;
+        System.out.println(Displayer.brokenAxe);
     }
 
-    public void moveUp(){
-        getLocation().add(Coordinate.up);
+    //Health related stuff
+    public int getHealth() {
+        return health;
     }
-    public void moveDown(){
-        getLocation().add(Coordinate.down);
+    public void harm() {
+        this.health = --health;
+        System.out.println(Displayer.foundBomb);
     }
-    public void moveRight(){
-        getLocation().add(Coordinate.right);
+    public boolean isDead() {
+        return health < 0;
     }
-    public void moveLeft(){
-        getLocation().add(Coordinate.left);
-    }
+
 
     @Override
     public String toString() {

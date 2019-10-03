@@ -9,7 +9,6 @@ public class Board {
         board = new char[size.getRow()][size.getCol()];
         fillArrayBoarders(size,symbol);
     }
-
     //Discovered maze
     public Board(char[][] map) {
         board = map;
@@ -19,6 +18,7 @@ public class Board {
         return this.board;
     }
 
+    //Visited maze related stuff
     void fillArrayBoarders(Coordinate size,char symbol){
         for (int row = 0; row < size.getRow(); row++) {
             for (int col = 0; col < size.getCol(); col++) {
@@ -28,7 +28,6 @@ public class Board {
             }
         }
     }
-
     public char getVisited(Coordinate position){
         return this.board[position.getRow()][position.getCol()];
     }
@@ -36,19 +35,23 @@ public class Board {
         this.board[position.getRow()][position.getCol()]=symbol;
     }
 
-    public boolean isWall(Coordinate move){
-        return this.board[move.getRow()][move.getCol()] == Displayer.wall;
+    //Walls related stuff
+    public boolean isWall(Coordinate position){
+        return this.board[position.getRow()][position.getCol()] == Displayer.wall;
     }
     public void destroyWall(Coordinate position) {
         board[position.getRow()][position.getCol()] = Displayer.road;
     }
+    public boolean isBedrock(Coordinate position){
+        return this.board[position.getRow()][position.getCol()] == Displayer.bedrock;
+    }
 
+    //Items related stuff
     public boolean isAxe(Coordinate move){
         return this.board[move.getRow()][move.getCol()] == Displayer.axe;
     }
-
-    public boolean isBedrock(Coordinate move){
-        return this.board[move.getRow()][move.getCol()] == Displayer.bedrock;
+    public boolean isBomb(Coordinate move){
+        return this.board[move.getRow()][move.getCol()] == Displayer.bomb;
     }
 
 }

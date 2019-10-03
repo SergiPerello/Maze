@@ -11,8 +11,11 @@ public class Displayer {
     public static final String notMoveText = "You can't move";
     public static final String notValidInput = "Not valid input";
     public static final String winText = "You won!";
+    public static final String loseText = "You lost!";
     public static final String collectedAxe = "You obtained an axe!!";
-    public static final String brokeAxe = "Axe is broken!!";
+    public static final String brokenAxe = "Axe is broken!!";
+    public static final String foundBomb = "You stepped a bomb!!";
+    public static final String healthInfo = "Your health is: ";
 
     static String askAction(String topText){
         System.out.println("_____________________________________________");
@@ -31,6 +34,6 @@ public class Displayer {
             }
             System.out.println();
         }
-
+        if (player.getHealth()>=0) System.out.println(Displayer.healthInfo+player.getHealth());
     }
 }
