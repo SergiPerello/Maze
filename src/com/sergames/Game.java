@@ -1,5 +1,9 @@
 package com.sergames;
 
+import java.util.ArrayList;
+
+import static com.sergames.Displayer.*;
+
 public class Game {
     /*
     '■' --> Bedrock
@@ -7,20 +11,21 @@ public class Game {
     '#' --> Wall
     'S' --> Start
     'E' --> End
-    'A' --> Axe
-    'B' --> Bomb
+    '?' --> Axe
+    '@' --> Bomb
      */
     char[][]hardCodedMap = {
             {'■','■','■','■','■','■','■','■','■'},
-            {'■','S','#',' ','B',' ','#','E','■'},
-            {'■',' ','#',' ','#','B','#',' ','■'},
-            {'■',' ','#','A','#',' ',' ',' ','■'},
-            {'■',' ','#',' ','#',' ','#','B','■'},
+            {'■','S','#',' ','@',' ','#','E','■'},
+            {'■',' ','#',' ','#','@','#',' ','■'},
+            {'■',' ','#','?','#',' ',' ',' ','■'},
+            {'■',' ','#',' ','#',' ','#','@','■'},
             {'■',' ',' ',' ','#',' ','#',' ','■'},
             {'■','■','■','■','■','■','■','■','■'}
     };
-    private Coordinate tableSize = new Coordinate(hardCodedMap.length,hardCodedMap[0].length);
-    private Board maze = new Board(hardCodedMap);
+    private Coordinate tableSize;
+    private Board maze;
+    ArrayList<Coordinate> walked;
     private Board visited;
     private Player player;
     private Coordinate start;
@@ -28,68 +33,73 @@ public class Game {
     boolean exit = false;
 
     public Game() {
+        tableSize = new Coordinate(hardCodedMap.length,hardCodedMap[0].length);
+        maze = new Board(hardCodedMap);
+        walked = new ArrayList<>();
         identifyMapLocations();
-        visited = new Board(tableSize,'#');
+        visited = new Board(tableSize, wall);
         player = new Player(start,5);
         start();
+
     }
 
     void start(){
         while (!exit){
-            Displayer.print(visited,player,tableSize);
-            playerNextStep(Displayer.askAction());
+            print(visited,player,tableSize);
+            playerNextStep(askAction(nextMove));
             if (isExit(player.getLocation())){
                 exit = true;
-                Displayer.print(maze,player,tableSize);
-                System.out.println(Displayer.winText);
+                print(maze,player,tableSize);
+                System.out.println(winText);
             }
         }
-    }
-    public boolean isStart(Coordinate move) {
-        return start.equals(move);
-    }
-    public boolean isExit(Coordinate move) {
-        return end.equals(move);
     }
 
     void identifyMapLocations(){
         for (int row=0;row<tableSize.getRow();row++){
             for (int col=0; col<tableSize.getCol();col++) {
-                if (hardCodedMap[row][col] == 'S') {
+                if (hardCodedMap[row][col] == Displayer.start) {
                     start = new Coordinate(row,col);
                 }
-                else if (hardCodedMap[row][col] == 'E') {
+                else if (hardCodedMap[row][col] == Displayer.end) {
                     end = new Coordinate(row,col);
-                }
-                else if (hardCodedMap[row][col] == 'B') {
-                    //bomb.setPosition(new Coordinate(row,col));
                 }
             }
         }
     }
 
+    public boolean isExit(Coordinate move) {
+        return end.equals(move);
+    }
+
     void playerNextStep(String move){
         Coordinate nextMove = null;
         switch (move){
-            case Displayer.up:
+            case up:
                 nextMove = player.getLocation().check(Coordinate.up);
                 break;
-            case Displayer.down:
+            case down:
                 nextMove = player.getLocation().check(Coordinate.down);
                 break;
-            case Displayer.right:
+            case right:
                 nextMove = player.getLocation().check(Coordinate.right);
                 break;
-            case Displayer.left:
+            case left:
                 nextMove = player.getLocation().check(Coordinate.left);
                 break;
+            case help:
+                //TODO:Help Assistant
+                break;
             default:
-                System.out.println(Displayer.notValidInput);
+                System.out.println(notValidInput);
                 break;
         }
         if (nextMove != null){
+            walked.add(player.getLocation());
             if (!maze.isWall(nextMove) && !maze.isBedrock(nextMove)) {
+                visited.setVisited(player.getLocation(),Displayer.walked);
                 player.move(nextMove);
+
                 if (maze.isAxe(nextMove)) {
                     player.addAxe();
                 }
@@ -100,10 +110,11 @@ public class Game {
                     player.removeAxe();
                     maze.destroyWall(nextMove);
                     visited.destroyWall(nextMove);
+                    visited.setVisited(player.getLocation(),Displayer.walked);
                 }
                 else {
                     visited.setVisited(nextMove,maze.getVisited(nextMove));
-                    System.out.println(Displayer.notMoveText);
+                    System.out.println(notMoveText);
                 }
             }
         }
