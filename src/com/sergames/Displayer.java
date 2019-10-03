@@ -6,7 +6,7 @@ public class Displayer {
 
     //UI Texts
     public static final String up="up", down="down", right="right", left="left";
-    public static final String axe = "axe", bomb = "bomb";
+    public static final char wall='#', axe = 'A', bomb = 'B';
     public static final String nextMove = "Next Action: (Up, Down, Right, Left)";
     public static final String notMoveText = "You can't move";
     public static final String notValidInput = "Not valid input";

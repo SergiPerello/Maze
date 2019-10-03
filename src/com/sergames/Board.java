@@ -37,7 +37,11 @@ public class Board {
     }
 
     public boolean isWall(Coordinate move){
-        return board[move.getRow()][move.getCol()] == '#';
+        return this.board[move.getRow()][move.getCol()] == Displayer.wall;
+    }
+
+    public boolean isAxe(Coordinate move){
+        return this.board[move.getRow()][move.getCol()] == Displayer.axe;
     }
 
 

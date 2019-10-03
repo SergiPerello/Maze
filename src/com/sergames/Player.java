@@ -6,14 +6,23 @@ public class Player {
 
     private int health;
     private Coordinate location;
+    private boolean axe;
 
     public Player(Coordinate start,int Health) {
         this.location = start;
         this.health = Health;
+        this.axe = false;
     }
 
+    public void addAxe() {
+        this.axe = true;
+    }
+    public void removeAxe() {
+        this.axe = false;
+    };
+
     public Coordinate getLocation(){
-        return this.location;
+        return location;
     }
 
     public void moveUp(){

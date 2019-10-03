@@ -24,10 +24,9 @@ public class Game {
     private Board maze = new Board(hardCodedMap);
     private Board visited;
     private Player player;
-    private Item axe = new Item(Displayer.axe);
-    private Item bomb = new Item(Displayer.bomb);
     private Coordinate start;
     private Coordinate end;
+    private Coordinate axe;
     boolean exit = false;
 
     public Game() {
@@ -65,10 +64,10 @@ public class Game {
                     end = new Coordinate(row,col);
                 }
                 else if (hardCodedMap[row][col] == 'A') {
-                    axe.setPosition(new Coordinate(row,col));
+                    axe = new Coordinate(row,col);
                 }
                 else if (hardCodedMap[row][col] == 'B') {
-                    bomb.setPosition(new Coordinate(row,col));
+                    //bomb.setPosition(new Coordinate(row,col));
                 }
             }
         }
@@ -79,7 +78,12 @@ public class Game {
         switch (move){
             case Displayer.up:
                 nextMove = player.getLocation().check(Coordinate.up);
-                if (!maze.isWall(nextMove)) player.moveUp();
+                if (!maze.isWall(nextMove)) {
+                    player.moveUp();
+                    if (maze.isAxe(nextMove)) {
+                        player.addAxe();
+                    }
+                }
                 else {
                     visited.setVisited(nextMove,maze.getVisited(nextMove));
                     System.out.println(Displayer.notMoveText);
