@@ -1,7 +1,5 @@
 package com.sergames;
 
-import java.util.Objects;
-
 public class Coordinate {
     public static Coordinate up = new Coordinate(-1,0);
     public static Coordinate down = new Coordinate(1,0);

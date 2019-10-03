@@ -1,9 +1,8 @@
 package com.sergames;
 
-import java.util.Scanner;
-
 public class Game {
     /*
+    '■' --> Bedrock
     ' ' --> Road
     '#' --> Wall
     'S' --> Start
@@ -12,13 +11,13 @@ public class Game {
     'B' --> Bomb
      */
     char[][]hardCodedMap = {
-            {'#','#','#','#','#','#','#','#','#'},
-            {'#','S','#',' ','B',' ','#','E','#'},
-            {'#',' ','#',' ','#','B','#',' ','#'},
-            {'#',' ','#','A','#',' ',' ',' ','#'},
-            {'#',' ','#',' ','#',' ','#','B','#'},
-            {'#',' ',' ',' ','#',' ','#',' ','#'},
-            {'#','#','#','#','#','#','#','#','#'}
+            {'■','■','■','■','■','■','■','■','■'},
+            {'■','S','#',' ','B',' ','#','E','■'},
+            {'■',' ','#',' ','#','B','#',' ','■'},
+            {'■',' ','#','A','#',' ',' ',' ','■'},
+            {'■',' ','#',' ','#',' ','#','B','■'},
+            {'■',' ',' ',' ','#',' ','#',' ','■'},
+            {'■','■','■','■','■','■','■','■','■'}
     };
     private Coordinate tableSize = new Coordinate(hardCodedMap.length,hardCodedMap[0].length);
     private Board maze = new Board(hardCodedMap);
@@ -26,7 +25,6 @@ public class Game {
     private Player player;
     private Coordinate start;
     private Coordinate end;
-    private Coordinate axe;
     boolean exit = false;
 
     public Game() {
@@ -63,9 +61,6 @@ public class Game {
                 else if (hardCodedMap[row][col] == 'E') {
                     end = new Coordinate(row,col);
                 }
-                else if (hardCodedMap[row][col] == 'A') {
-                    axe = new Coordinate(row,col);
-                }
                 else if (hardCodedMap[row][col] == 'B') {
                     //bomb.setPosition(new Coordinate(row,col));
                 }
@@ -74,48 +69,43 @@ public class Game {
     }
 
     void playerNextStep(String move){
-        Coordinate nextMove;
+        Coordinate nextMove = null;
         switch (move){
             case Displayer.up:
                 nextMove = player.getLocation().check(Coordinate.up);
-                if (!maze.isWall(nextMove)) {
-                    player.moveUp();
-                    if (maze.isAxe(nextMove)) {
-                        player.addAxe();
-                    }
-                }
-                else {
-                    visited.setVisited(nextMove,maze.getVisited(nextMove));
-                    System.out.println(Displayer.notMoveText);
-                }
                 break;
             case Displayer.down:
                 nextMove = player.getLocation().check(Coordinate.down);
-                if (!maze.isWall(nextMove)) player.moveDown();
-                else {
-                    visited.setVisited(nextMove,maze.getVisited(nextMove));
-                    System.out.println(Displayer.notMoveText);
-                }
                 break;
             case Displayer.right:
                 nextMove = player.getLocation().check(Coordinate.right);
-                if (!maze.isWall(nextMove)) player.moveRight();
-                else {
-                    visited.setVisited(nextMove,maze.getVisited(nextMove));
-                    System.out.println(Displayer.notMoveText);
-                }
                 break;
             case Displayer.left:
                 nextMove = player.getLocation().check(Coordinate.left);
-                if (!maze.isWall(nextMove)) player.moveLeft();
-                else {
-                    visited.setVisited(nextMove,maze.getVisited(nextMove));
-                    System.out.println(Displayer.notMoveText);
-                }
                 break;
             default:
                 System.out.println(Displayer.notValidInput);
                 break;
+        }
+        if (nextMove != null){
+            if (!maze.isWall(nextMove) && !maze.isBedrock(nextMove)) {
+                player.move(nextMove);
+                if (maze.isAxe(nextMove)) {
+                    player.addAxe();
+                }
+            }
+            else {
+                if (player.hasAxe() && maze.isWall(nextMove)){
+                    player.move(nextMove);
+                    player.removeAxe();
+                    maze.destroyWall(nextMove);
+                    visited.destroyWall(nextMove);
+                }
+                else {
+                    visited.setVisited(nextMove,maze.getVisited(nextMove));
+                    System.out.println(Displayer.notMoveText);
+                }
+            }
         }
     }
 }

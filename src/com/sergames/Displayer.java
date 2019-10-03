@@ -6,11 +6,13 @@ public class Displayer {
 
     //UI Texts
     public static final String up="up", down="down", right="right", left="left";
-    public static final char wall='#', axe = 'A', bomb = 'B';
+    public static final char road=' ', bedrock='■', wall='#', axe = 'A', bomb = 'B';
     public static final String nextMove = "Next Action: (Up, Down, Right, Left)";
     public static final String notMoveText = "You can't move";
     public static final String notValidInput = "Not valid input";
     public static final String winText = "You won!";
+    public static final String collectedAxe = "You obtained an axe!!";
+    public static final String brokeAxe = "Axe is broken!!";
 
     static String askAction(){
         Scanner sc = new Scanner(System.in);

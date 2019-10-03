@@ -39,10 +39,16 @@ public class Board {
     public boolean isWall(Coordinate move){
         return this.board[move.getRow()][move.getCol()] == Displayer.wall;
     }
+    public void destroyWall(Coordinate position) {
+        board[position.getRow()][position.getCol()] = Displayer.road;
+    }
 
     public boolean isAxe(Coordinate move){
         return this.board[move.getRow()][move.getCol()] == Displayer.axe;
     }
 
+    public boolean isBedrock(Coordinate move){
+        return this.board[move.getRow()][move.getCol()] == Displayer.bedrock;
+    }
 
 }

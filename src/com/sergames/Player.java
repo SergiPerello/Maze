@@ -1,7 +1,5 @@
 package com.sergames;
 
-import java.util.Random;
-
 public class Player {
 
     private int health;
@@ -14,15 +12,28 @@ public class Player {
         this.axe = false;
     }
 
+    public boolean hasAxe() {
+        return axe;
+    }
+
     public void addAxe() {
         this.axe = true;
+        System.out.println(Displayer.collectedAxe);
     }
     public void removeAxe() {
         this.axe = false;
-    };
+        System.out.println(Displayer.brokeAxe);
+    }
 
     public Coordinate getLocation(){
         return location;
+    }
+    public void setLocation(Coordinate location) {
+        this.location = location;
+    }
+
+    public void move(Coordinate move){
+        setLocation(move);
     }
 
     public void moveUp(){
