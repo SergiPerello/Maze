@@ -37,21 +37,21 @@ public class Board {
 
     //Walls related stuff
     public boolean isWall(Coordinate position){
-        return this.board[position.getRow()][position.getCol()] == Displayer.wall;
+        return this.board[position.getRow()][position.getCol()] == View.wall;
     }
     public void destroyWall(Coordinate position) {
-        board[position.getRow()][position.getCol()] = Displayer.road;
+        board[position.getRow()][position.getCol()] = View.road;
     }
     public boolean isBedrock(Coordinate position){
-        return this.board[position.getRow()][position.getCol()] == Displayer.bedrock;
+        return this.board[position.getRow()][position.getCol()] == View.bedrock;
     }
 
     //Items related stuff
     public boolean isAxe(Coordinate move){
-        return this.board[move.getRow()][move.getCol()] == Displayer.axe;
+        return this.board[move.getRow()][move.getCol()] == View.axe;
     }
     public boolean isBomb(Coordinate move){
-        return this.board[move.getRow()][move.getCol()] == Displayer.bomb;
+        return this.board[move.getRow()][move.getCol()] == View.bomb;
     }
 
 }

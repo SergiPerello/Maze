@@ -26,12 +26,6 @@ public class Coordinate {
         return new Coordinate(a,b);
     }
 
-    public Coordinate add(Coordinate other){
-        this.row += other.row;
-        this.col += other.col;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

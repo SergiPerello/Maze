@@ -30,11 +30,11 @@ public class Player {
     }
     public void addAxe() {
         this.axe = true;
-        System.out.println(Displayer.collectedAxe);
+        System.out.println(View.collectedAxe);
     }
     public void removeAxe() {
         this.axe = false;
-        System.out.println(Displayer.brokenAxe);
+        System.out.println(View.brokenAxe);
     }
 
     //Health related stuff
@@ -43,12 +43,11 @@ public class Player {
     }
     public void harm() {
         this.health = --health;
-        System.out.println(Displayer.foundBomb);
+        System.out.println(View.foundBomb);
     }
     public boolean isDead() {
         return health < 0;
     }
-
 
     @Override
     public String toString() {

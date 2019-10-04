@@ -2,7 +2,7 @@ package com.sergames;
 
 import java.util.ArrayList;
 
-import static com.sergames.Displayer.*;
+import static com.sergames.View.*;
 
 public class Game {
     /*
@@ -16,10 +16,10 @@ public class Game {
      */
     char[][]hardCodedMap = {
             {'■','■','■','■','■','■','■','■','■'},
-            {'■','S','#',' ','@',' ','#','E','■'},
-            {'■',' ','#',' ','#','@','#',' ','■'},
-            {'■',' ','#','?','#',' ',' ',' ','■'},
-            {'■',' ','#',' ','#',' ','#','@','■'},
+            {'■','S',' ',' ','@',' ','#',' ','■'},
+            {'■',' ','E',' ','#','@','#',' ','■'},
+            {'■',' ',' ','?','#',' ',' ',' ','■'},
+            {'■',' ',' ',' ','#',' ','#','@','■'},
             {'■',' ','@',' ','#','@','#',' ','■'},
             {'■','■','■','■','■','■','■','■','■'}
     };
@@ -42,20 +42,20 @@ public class Game {
         player = new Player(start,5);
         start();
     }
-    void identifyMapLocations(){
+    private void identifyMapLocations(){
         for (int row=0;row<tableSize.getRow();row++){
             for (int col=0; col<tableSize.getCol();col++) {
-                if (hardCodedMap[row][col] == Displayer.start) {
+                if (hardCodedMap[row][col] == View.start) {
                     start = new Coordinate(row,col);
                 }
-                else if (hardCodedMap[row][col] == Displayer.end) {
+                else if (hardCodedMap[row][col] == View.end) {
                     end = new Coordinate(row,col);
                 }
             }
         }
     }
 
-    void start(){
+    private void start(){
         while (!exit){
             print(visited,player,tableSize);
             playerNextStep(askAction(nextMove));
@@ -63,7 +63,7 @@ public class Game {
         }
     }
 
-    void playerNextStep(String move){
+    private void playerNextStep(String move){
         Coordinate nextMove = null;
         switch (move){
             case up:
@@ -80,6 +80,7 @@ public class Game {
                 break;
             case help:
                 //TODO:Help Assistant
+                help();
                 break;
             default:
                 System.out.println(notValidInput);
@@ -88,7 +89,7 @@ public class Game {
         if (nextMove != null){
             walked.add(player.getLocation());
             if (!maze.isWall(nextMove) && !maze.isBedrock(nextMove)) {
-                visited.setVisited(player.getLocation(),Displayer.walked);
+                visited.setVisited(player.getLocation(), View.walked);
                 player.move(nextMove);
                 if (maze.isAxe(nextMove)) player.addAxe();
                 if (maze.isBomb(nextMove)) player.harm();
@@ -99,7 +100,7 @@ public class Game {
                     player.removeAxe();
                     maze.destroyWall(nextMove);
                     visited.destroyWall(nextMove);
-                    visited.setVisited(player.getLocation(),Displayer.walked);
+                    visited.setVisited(player.getLocation(), View.walked);
                 }
                 else {
                     visited.setVisited(nextMove,maze.getVisited(nextMove));
@@ -110,7 +111,7 @@ public class Game {
     }
 
     //EndGame related stuff
-    public boolean isExit(Coordinate move) {
+    private boolean isExit(Coordinate move) {
         return end.equals(move);
     }
     private boolean checkEndGame(boolean exit) {
@@ -127,6 +128,39 @@ public class Game {
         return exit;
     }
 
-
+    private void help() {
+        int playerRow = player.getLocation().getRow();
+        int playerCol = player.getLocation().getCol();
+        int i = 0;
+        String result;
+        if (playerRow > end.getRow()){
+            System.out.println(n);
+            i++;
+        }
+        else if (playerRow < end.getRow()){
+            System.out.println(s);
+            i++;
+        }
+        if (playerCol < end.getCol()){
+            System.out.println(e);
+        }
+        else if (playerCol > end.getCol()){
+            System.out.println(w);
+        }
+        /*
+        else if (playerRow>end.getRow() && playerCol<end.getCol()){
+            System.out.println(ne);
+        }
+        else if (playerRow>end.getRow() && playerCol>end.getCol()){
+            System.out.println(nw);
+        }
+        else if (playerRow<end.getRow() && playerCol<end.getCol()){
+            System.out.println(se);
+        }
+        else if (playerRow<end.getRow() && playerCol>end.getCol()){
+            System.out.println(sw);
+        }
+        */
+    }
 
 }
