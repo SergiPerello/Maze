@@ -79,7 +79,6 @@ public class Game {
                 nextMove = player.getLocation().check(Coordinate.left);
                 break;
             case help:
-                //TODO:Help Assistant
                 help();
                 break;
             default:
@@ -131,36 +130,19 @@ public class Game {
     private void help() {
         int playerRow = player.getLocation().getRow();
         int playerCol = player.getLocation().getCol();
-        int i = 0;
-        String result;
+
         if (playerRow > end.getRow()){
-            System.out.println(n);
-            i++;
+            System.out.print(n);
         }
         else if (playerRow < end.getRow()){
-            System.out.println(s);
-            i++;
+            System.out.print(s);
         }
         if (playerCol < end.getCol()){
-            System.out.println(e);
+            System.out.print(e);
         }
         else if (playerCol > end.getCol()){
-            System.out.println(w);
+            System.out.print(w);
         }
-        /*
-        else if (playerRow>end.getRow() && playerCol<end.getCol()){
-            System.out.println(ne);
-        }
-        else if (playerRow>end.getRow() && playerCol>end.getCol()){
-            System.out.println(nw);
-        }
-        else if (playerRow<end.getRow() && playerCol<end.getCol()){
-            System.out.println(se);
-        }
-        else if (playerRow<end.getRow() && playerCol>end.getCol()){
-            System.out.println(sw);
-        }
-        */
     }
 
 }
