@@ -15,13 +15,16 @@ public class Game {
     '@' --> Bomb
      */
     char[][]hardCodedMap = {
-            {'■','■','■','■','■','■','■','■','■'},
-            {'■','S',' ',' ','@',' ','#',' ','■'},
-            {'■',' ','E',' ','#','@','#',' ','■'},
-            {'■',' ',' ','?','#',' ',' ',' ','■'},
-            {'■',' ',' ',' ','#',' ','#','@','■'},
-            {'■',' ','@',' ','#','@','#',' ','■'},
-            {'■','■','■','■','■','■','■','■','■'}
+            {'■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■'},
+            {'■',' ','#',' ','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ','#',' ',' ','?',' ',' ',' ','■'},
+            {'■',' ','#',' ','#',' ','@',' ',' ','#','#','#',' ','#','#',' ','#',' ','#',' ','#',' ','#',' ','#','#','#','#',' ','■'},
+            {'■',' ',' ',' ','#','#','#','#',' ','#',' ','@',' ','#',' ',' ','#',' ','#',' ','#','@','#',' ','#',' ',' ','#',' ','■'},
+            {'■','@','#',' ',' ',' ',' ',' ',' ','#',' ','#',' ','#',' ','@','#',' ','#',' ','#',' ',' ',' ','#','#','#','#',' ','■'},
+            {'■','#','#',' ','#','#','#',' ','#','#',' ','#',' ',' ',' ','#','#',' ','#',' ','#',' ','#',' ',' ',' ',' ',' ',' ','■'},
+            {'■','E','#',' ',' ',' ','#',' ',' ','#',' ','#',' ',' ','S','?',' ',' ','#',' ',' ',' ','#',' ','#','#',' ','#',' ','■'},
+            {'■',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','@',' ','#','#','■'},
+            {'■',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','■'},
+            {'■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■','■'}
     };
     private Coordinate tableSize;
     private Board maze;
@@ -58,6 +61,7 @@ public class Game {
     private void start(){
         while (!exit){
             print(visited,player,tableSize);
+            System.out.println(nextRoundSeparator);
             playerNextStep(askAction(nextMove));
             exit = checkEndGame(exit);
         }
@@ -90,16 +94,31 @@ public class Game {
             if (!maze.isWall(nextMove) && !maze.isBedrock(nextMove)) {
                 visited.setVisited(player.getLocation(), View.walked);
                 player.move(nextMove);
-                if (maze.isAxe(nextMove)) player.addAxe();
-                if (maze.isBomb(nextMove)) player.harm();
+                if (maze.isAxe(nextMove)) {
+                    player.addAxe();
+                    maze.setRoad(nextMove);
+                    visited.setRoad(nextMove);
+                }
+                else if (maze.isBomb(nextMove)) {
+                    player.harm();
+                    maze.setRoad(nextMove);
+                    visited.setRoad(nextMove);
+                }
             }
             else {
                 if (player.hasAxe() && maze.isWall(nextMove)){
-                    player.move(nextMove);
-                    player.removeAxe();
-                    maze.destroyWall(nextMove);
-                    visited.destroyWall(nextMove);
-                    visited.setVisited(player.getLocation(), View.walked);
+                    String destroyWall = askAction(useAxe);
+                    if (destroyWall.equals("yes") || destroyWall.equals("y")){
+                        player.move(nextMove);
+                        player.removeAxe();
+                        maze.setRoad(nextMove);
+                        visited.setRoad(nextMove);
+                        visited.setVisited(player.getLocation(), View.walked);
+                    }
+                    else{
+                        visited.setVisited(nextMove,maze.getVisited(nextMove));
+                        System.out.println(notUseAxe);
+                    }
                 }
                 else {
                     visited.setVisited(nextMove,maze.getVisited(nextMove));
@@ -143,6 +162,7 @@ public class Game {
         else if (playerCol > end.getCol()){
             System.out.print(w);
         }
+        System.out.println();
     }
 
 }

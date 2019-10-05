@@ -39,7 +39,7 @@ public class Board {
     public boolean isWall(Coordinate position){
         return this.board[position.getRow()][position.getCol()] == View.wall;
     }
-    public void destroyWall(Coordinate position) {
+    public void setRoad(Coordinate position) {
         board[position.getRow()][position.getCol()] = View.road;
     }
     public boolean isBedrock(Coordinate position){
