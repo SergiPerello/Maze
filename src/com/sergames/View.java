@@ -29,6 +29,7 @@ public class View {
     }
 
     static void print(Board board,Player player,Coordinate size){
+        if (player.getHealth()>=0) System.out.println(View.healthInfo+player.getHealth());
         for (int row=0;row<size.getRow();row++){
             for (int col=0;col<size.getCol();col++){
                 if (player.getLocation().getRow() == row && player.getLocation().getCol() == col){
@@ -38,6 +39,5 @@ public class View {
             }
             System.out.println();
         }
-        if (player.getHealth()>=0) System.out.println(View.healthInfo+player.getHealth());
     }
 }
